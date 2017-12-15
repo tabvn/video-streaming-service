@@ -21,4 +21,8 @@ sudo python get-pip.py
  ```
  pip install autobahn[twisted]
  ```
+On MacOs if you are getting an error after running that command use following command
 
+```
+pip install autobahn[twisted] --user
+```
