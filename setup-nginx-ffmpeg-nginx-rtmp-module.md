@@ -78,3 +78,107 @@ Stream a movie (video.mkv) to Nginx Rtmp Server eg: rtmp://localhost/live/tabvn
 ffmpeg -re -i video.mkv -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 160k -ac 2 -ar 44100 -f flv rtmp://localhost/live/tabvn
 
 ```
+
+## Nginx Config Sample for Nginx + Nginx Rtmp Module
+
+```
+Nginx.conf
+
+worker_processes  auto;
+
+events {
+    worker_connections  1024;
+}
+
+## HLS server streaming
+rtmp {
+    server {
+        listen 1935; # Listen on standard RTMP port
+        chunk_size 4000;
+        application live{
+            live on;
+            deny play all;
+            push rtmp://localhost/show;
+            on_publish http://localhost:3001/auth;
+            on_publish_done http://localhost:3001/done;
+        }
+        application show {
+            live on;
+            # Turn on HLS
+            hls on;
+            hls_nested on;
+            hls_fragment_naming system;
+            hls_path /Users/toan/Sites/mnt/hls/;
+            hls_fragment 3;
+            hls_playlist_length 60;
+            
+            # disable consuming the stream from nginx as rtmp
+            deny play all;
+        }
+    }
+}
+
+#end hls server stream
+
+
+http {
+   
+   sendfile off;
+   tcp_nopush on;
+   #aio on;
+    directio 512;
+    default_type application/octet-stream;
+
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+    
+    }
+
+server {
+    listen 8080;
+
+    location /hls {
+        # Disable cache
+        add_header Cache-Control no-cache;
+
+        # CORS setup
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Expose-Headers' 'Content-Length';
+
+        # allow CORS preflight requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+
+        types {
+            application/vnd.apple.mpegurl m3u8;
+            video/mp2t ts;
+        }
+
+        root /Users/toan/Sites/mnt/;
+    }
+}
+
+
+   
+}
+
+
+
+```
