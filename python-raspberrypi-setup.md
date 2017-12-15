@@ -45,9 +45,10 @@ class AppProtocol(WebSocketClientProtocol):
 
         # when connection is open we send a test message the the server.
 
-        def hello():
-            self.sendMessage(u"Hello the server i 'm Raspberry PI")
-            self.factory.reactor.callLater(1, hello)
+        def hello_server():
+            self.sendMessage(u"Hello the server i 'm Raspberry PI".encode('utf8'))
+            self.factory.reactor.callLater(1, hello_server)
+        hello_server()
 
     def onMessage(self, payload, isBinary):
         if (isBinary):
@@ -83,5 +84,6 @@ if __name__ == '__main__':
     factory = AppFactory(u"ws://127.0.0.1:3001")
     reactor.connectTCP(server, port, factory)
     reactor.run()
+
 
 ```
