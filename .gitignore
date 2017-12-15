@@ -14,6 +14,7 @@ server/node_modules
 web/node_modules
 api/dist
 api/package-lock.json
+api/node_modules
 
 web/node_modules
 web/package-lock.json
