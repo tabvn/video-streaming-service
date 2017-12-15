@@ -42,3 +42,18 @@ Reload Nginx
 ```
 nginx -s reload
 ```
+
+## Setup ffmpeg on MacOs 
+FFMPEG that is awesome and free tools for video converting, streaming, we will use this tool for stream video from a camera (on Raspberry Pi Zero W) and send stream video from camera to our Server or Youtube. 
+for development we use it on Mac for testing and just stream a video source from a input movie .mkv format.
+We can download and install package directly from official website https://www.ffmpeg.org/download.html
+or use Home brew to install it on MacOs.
+```
+brew install ffmpeg
+```
+Or Install with extra resources (Plugins)
+
+```
+brew install ffmpeg --with-tools --with-fdk-aac --with-freetype --with-fontconfig --with-libass --with-libvorbis --with-libvpx 
+
+```
