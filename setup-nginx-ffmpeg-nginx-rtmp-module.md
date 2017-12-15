@@ -98,11 +98,11 @@ rtmp {
         application live{
             live on;
             deny play all;
-            push rtmp://localhost/show;
-            on_publish http://localhost:3001/auth;
-            on_publish_done http://localhost:3001/done;
+            push rtmp://localhost/play;
+            #on_publish http://localhost:3001/auth;
+            #on_publish_done http://localhost:3001/done;
         }
-        application show {
+        application play {
             live on;
             # Turn on HLS
             hls on;
