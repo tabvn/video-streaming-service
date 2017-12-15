@@ -37,9 +37,10 @@ export default class Player extends Component{
     }
     componentDidMount(){
 
+        const liveChannel = 'dinhtoan';
 
         if(Hls.isSupported() && this.player) {
-            const streamURL = 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8';
+            const streamURL = `http://localhost:3002/live/${liveChannel}/index.m3u8`;
             const video = this.player;
 
 
