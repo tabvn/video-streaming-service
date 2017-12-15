@@ -82,15 +82,16 @@ ffmpeg -re -i video.mkv -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 60
 ## Nginx Config Sample for Nginx + Nginx Rtmp Module
 
 ```
-Nginx.conf
-
 worker_processes  auto;
+
+
 
 events {
     worker_connections  1024;
 }
 
-## HLS server streaming
+# RTMP Config
+
 rtmp {
     server {
         listen 1935; # Listen on standard RTMP port
@@ -99,8 +100,8 @@ rtmp {
             live on;
             deny play all;
             push rtmp://localhost/play;
-            #on_publish http://localhost:3001/auth;
-            #on_publish_done http://localhost:3001/done;
+            on_publish http://localhost:3001/api/on-live-auth;
+            on_publish_done http://localhost:3001/api/on-live-done;
         }
         application play {
             live on;
@@ -108,49 +109,31 @@ rtmp {
             hls on;
             hls_nested on;
             hls_fragment_naming system;
-            hls_path /Users/toan/Sites/mnt/hls/;
+            #hls_path /Users/toan/Sites/mnt/hls/;
+            hls_path /Users/toan/Tutorials/stream/storage/live/;
             hls_fragment 3;
             hls_playlist_length 60;
-            
+
             # disable consuming the stream from nginx as rtmp
             deny play all;
         }
     }
 }
-
-#end hls server stream
-
+# End RTMP Config
 
 http {
-   
-   sendfile off;
-   tcp_nopush on;
-   #aio on;
-    directio 512;
-    default_type application/octet-stream;
+
+    default_type  application/octet-stream;
+    sendfile off;
+    tcp_nopush on;
 
 
     server {
-        listen       80;
-        server_name  localhost;
+        listen 3002;
 
-        #charset koi8-r;
+        location /live {
 
-        #access_log  logs/host.access.log  main;
-
-        location / {
-            root   html;
-            index  index.html index.htm;
-        }
-
-    
-    }
-
-server {
-    listen 8080;
-
-    location /hls {
-        # Disable cache
+            # Disable cache
         add_header Cache-Control no-cache;
 
         # CORS setup
@@ -171,13 +154,15 @@ server {
             video/mp2t ts;
         }
 
-        root /Users/toan/Sites/mnt/;
+
+            root /Users/toan/Tutorials/stream/storage/;
+
+        }
     }
+
+    include servers/*;
 }
 
-
-   
-}
 
 
 
