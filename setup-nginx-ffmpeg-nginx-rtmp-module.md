@@ -54,6 +54,22 @@ brew install ffmpeg
 Or Install with extra resources (Plugins)
 
 ```
-brew install ffmpeg --with-tools --with-fdk-aac --with-freetype --with-fontconfig --with-libass --with-libvorbis --with-libvpx 
+brew install ffmpeg --with-tools --with-fdk-aac --with-freetype --with-fontconfig --with-libass --with-libvorbis --with-libvpx --with-opus --with-x265
+
+```
+Update Ffmpeg to latest version
+```
+brew update && brew upgrade ffmpeg
+```
+
+Documentation for list all inputs videos/audios https://www.ffmpeg.org/ffmpeg-devices.html 
+On MacOs 
+```
+ffmpeg -f avfoundation -list_devices true -i ""
+
+```
+Stream Camera on MacOs + Audio to rtmp server ,remember change frame rate correctly in my iMac it:  -r 30
+```
+ffmpeg -f avfoundation -r 30 -i "0:0" -deinterlace -vcodec libx264 -pix_fmt yuv420p -preset medium -g 60 -b:v 2500k -acodec libmp3lame -ar 44100 -threads 6 -qscale 3 -b:a 712000 -bufsize 512k -f flv rtmp://localhost/live/tabvn
 
 ```
