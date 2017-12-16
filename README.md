@@ -5,10 +5,23 @@ Build Live Video Streaming Server use Ffmpeg Nginx Rtmp Module & Nodejs
 ## Start React front-end Application
 ```
 cd web
+npm install
 ```
 ```
 npm start
 
+```
+
+## Node.js Api Restful Service
+```
+cd web
+```
+
+```
+npm install
+```
+```
+npm start
 ```
 
 ## Setup Nginx + Nginx-rtmp-module & Ffmpeg 
