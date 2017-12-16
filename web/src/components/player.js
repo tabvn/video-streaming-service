@@ -37,7 +37,7 @@ export default class Player extends Component{
     }
     componentDidMount(){
 
-        const liveChannel = 'dinhtoan';
+        const liveChannel = 'tabvn';
 
         if(Hls.isSupported() && this.player) {
             const streamURL = `http://localhost:3002/live/${liveChannel}/index.m3u8`;

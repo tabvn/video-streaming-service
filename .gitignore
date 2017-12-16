@@ -18,3 +18,6 @@ api/node_modules
 
 web/node_modules
 web/package-lock.json
+
+raspberrypi/.idea
+raspberrypi/venv
