@@ -27,6 +27,19 @@ On MacOs if you are getting an error after running that command use following co
 pip install autobahn[twisted] --user
 ```
 
+## Python Libraries we will use
+* autobahn
+* twisted
+* subprocess https://docs.python.org/2/library/subprocess.html we will use this to run ffmpeg as external exec command
+ ```python
+ cmd = 'ffmpeg -re -i /Users/toan/Tutorials/stream/video.mkv -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 160k -ac 2 -ar 44100 -f flv rtmp://localhost/live/tabvn'
+        subprocess.call(cmd, shell=True)
+ ```
+* Json use json.loads to read json strong and decode. json.dumps to convert json object to string and send to server
+ ```python
+ import json
+ ```
+
 ## Sample Python App for Websocket client
 
 ```python
