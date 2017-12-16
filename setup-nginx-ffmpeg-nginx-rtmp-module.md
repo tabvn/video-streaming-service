@@ -116,6 +116,9 @@ rtmp {
 
             # disable consuming the stream from nginx as rtmp
             deny play all;
+            #only allow from local
+            allow publish 127.0.0.1;
+            deny publish all;
         }
     }
 }
@@ -162,7 +165,6 @@ http {
 
     include servers/*;
 }
-
 
 
 
