@@ -10,7 +10,9 @@
   "author": "toan@tabvn.com",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",
