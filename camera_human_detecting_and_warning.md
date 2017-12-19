@@ -17,7 +17,7 @@ brew install opencv
 ```
 find setup solution for your OS: https://opencv.org/releases.html
 
-## Python Package 
+## OpenCV Python Package 
 ```
 pip install opencv-python
 ```
