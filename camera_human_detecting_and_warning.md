@@ -12,6 +12,7 @@ this is really cool and speed framework for traning a model.
 ## Install OpenCV on MacOs
 
 ```
+brew install pkg-config
 brew tap homebrew/science
 brew install opencv@2
 ```
