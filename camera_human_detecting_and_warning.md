@@ -15,3 +15,4 @@ this is really cool and speed framework for traning a model.
 brew tap homebrew/science
 brew install opencv
 ```
+find setup solution for your OS: https://opencv.org/releases.html
