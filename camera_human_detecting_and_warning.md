@@ -13,7 +13,7 @@ this is really cool and speed framework for traning a model.
 
 ```
 brew tap homebrew/science
-brew install opencv
+brew install opencv@2
 ```
 find setup solution for your OS: https://opencv.org/releases.html
 
@@ -21,3 +21,4 @@ find setup solution for your OS: https://opencv.org/releases.html
 ```
 pip install opencv-python
 ```
+
