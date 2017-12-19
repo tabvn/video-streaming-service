@@ -8,3 +8,10 @@ and also we read every frame in video and use OpenCV to decode in that frame if 
 we do use https://github.com/opencv/opencv for this project, this is model already trained and so easy to use.
 If you want to training your self model use Deep Machine Learning i highly recommend use Caffe https://github.com/BVLC/caffe  
 this is really cool and speed framework for traning a model.
+
+## Install OpenCV on MacOs
+
+```
+brew tap homebrew/science
+brew install opencv
+```
