@@ -22,6 +22,18 @@ export default  class Store{
 
         });
     }
+    login(user, cb = () => {}){
+
+        this.service.post('/api/users/login', user).then((response) => {
+
+            return cb(null, response.data);
+
+        }).catch(err => {
+
+
+            return cb(err, null);
+        })
+    }
     update(){
 
         this.app.forceUpdate();

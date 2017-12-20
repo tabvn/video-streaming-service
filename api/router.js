@@ -30,7 +30,6 @@ exports.routers = (app) => {
     };
 
 
-
     /**
      * @method GET
      * @endpoint /
@@ -140,14 +139,75 @@ exports.routers = (app) => {
 
         app.models.user.create(body, (err, result) => {
 
-            if(err === null && result){
+            if (err === null && result) {
                 _.unset(result, 'password');
             }
-            return err ? errorHandle(res, err, 503): responseHandle(res, result);
+            return err ? errorHandle(res, err, 503) : responseHandle(res, result);
 
         });
     });
 
+
+    /**
+     * @method GET
+     * @endpoint /api/users/me
+     * @description Get owner info.
+     *
+     */
+
+    app.get('/api/users/me', (req, res, next) => {
+
+        let tokenId = req.get('authorization');
+        if (!tokenId) {
+
+            tokenId = req.query.auth;
+        }
+
+        if (!tokenId) {
+
+            return errorHandle(res, "Access denied", 401);
+        }
+
+
+       app.models.token.verify(tokenId, (err, result) => {
+
+            if(err){
+                return errorHandle(res, "Access denied", 401);
+            }
+
+            return responseHandle(res, result);
+        });
+    });
+
+
+    /**
+     * @method POST
+     * @endpoint /api/users/login
+     * @description Login a user and return token object
+     *
+     */
+
+    app.post('/api/users/login', (req, res, next) => {
+        const userData = req.body;
+
+        if (!_.get(userData, 'email') || !_.get(userData, 'password')) {
+
+            return errorHandle(res, "Email & Password is required", 500);
+        }
+
+        app.models.user.login(_.get(userData, 'email', ''), _.get(userData, 'password'), (err, result) => {
+
+            if (err) {
+
+                return errorHandle(res, err, 401);
+            }
+
+            return responseHandle(res, result);
+
+        });
+
+
+    });
 
 
 };

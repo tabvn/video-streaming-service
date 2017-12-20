@@ -1,55 +1,23 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
 import _ from 'lodash'
-import {dangerColor} from "../../theme";
+
+import {
+    FormSuccessMessage,
+    FormErrorMessage,
+    Form,
+    FormItem,
+    FormAction,
+    FormInput,
+    FormLabel,
+    FormSubmit
+} from '../../themes/form'
 
 const RegisterWrapper = styled.div `
  
 `
 
 
-const FormSuccessMessage = styled.p`
-    border: 1px solid rgba(0, 0 ,0, 0.06);
-    padding: 8px;
-    
-`
-const FormErrorMessage = styled.p`
-    border: 1px solid ${dangerColor};
-    padding: 8px;
-    
-`
-const Form = styled.form`
-    padding: 20px 0;
-    max-width: 300px;
-`
-const FormItem = styled.div `
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-`
-const FormLabel = styled.label `
-
-       font-weight: 600;
-`
-const FormInput = styled.input `
-      border: 1px solid rgba(0,0,0.06);
-      padding: 5px 15px;
-    
-`
-
-const FormAction = styled.div `
-
-    
-`
-
-const FormSubmit = styled.button `
-        
-        border: 1px solid rgba(0, 0, 0.06);
-        padding: 5px 15px;
-        background: #FFF;
-        font-weight: 600;
-
-`
 export default class Register extends Component {
 
     constructor(props) {
@@ -82,19 +50,19 @@ export default class Register extends Component {
 
         store.createUserAccount(user, (err, result) => {
 
-            if(err){
+            if (err) {
                 this.setState({
-                    message: {type: 'error', msg: _.get(err,'error.message', 'An error creating your account')}
+                    message: {type: 'error', msg: _.get(err, 'error.message', 'An error creating your account')}
                 });
             }
 
-            else{
+            else {
 
                 this.setState({
                     message: {type: 'success', msg: 'Your account has been created.'}
                 });
             }
-           
+
         })
 
     }

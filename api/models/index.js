@@ -1,5 +1,5 @@
 const User = require('./user');
-
+const Token = require('./token')
 class Model{
 
 
@@ -9,6 +9,7 @@ class Model{
 
 
         this.user = new User(app);
+        this.token = new Token(app);
 
     }
 }
