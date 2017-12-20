@@ -17,6 +17,54 @@ class Token {
         this.tokens = this.tokens.set(id, token);
     }
 
+    load(id, cb = () => {
+    }) {
+
+        if (typeof id !== 'string') {
+            id = _.toString(id);
+
+
+        }
+
+        // get token in cache
+        const tokenInCache = this.tokens.get(id);
+
+        if (tokenInCache) {
+            return cb(null, tokenInCache);
+        }
+
+        let tokenObjectId = null;
+
+        try{
+            tokenObjectId = new ObjectID(id);
+        }
+        catch (err){
+            console.log("An error", err);
+        }
+
+        // otherwise need find in db
+        this.app.db.collection('token').find({_id: tokenObjectId}).limit(1).toArray((err, results) => {
+
+            const token = _.get(results, '[0]', null);
+            if(err || !token){
+
+                return cb("Token not found", null);
+            }
+
+
+            // we also cache this for later and dont have to query to db any more.
+
+            this.addTokenToCache(_.toString(id), token);
+
+            return cb(null, token);
+
+
+
+        });
+
+
+    }
+
     verify(tokenId, cb = () => {
     }) {
 
@@ -48,10 +96,10 @@ class Token {
             let tokenObjectId = null;
 
             // let find token in db
-            try{
-                tokenObjectId =  new ObjectID(tokenId);
+            try {
+                tokenObjectId = new ObjectID(tokenId);
             }
-            catch (err){
+            catch (err) {
 
                 console.log(err);
 
@@ -61,7 +109,7 @@ class Token {
             this.app.db.collection('token').find({_id: tokenObjectId}).limit(1).toArray((err, results) => {
 
 
-                if(err || !_.get(results, '[0]')){
+                if (err || !_.get(results, '[0]')) {
 
                     return cb("Token not found", null);
                 }
@@ -78,12 +126,10 @@ class Token {
                     }
 
 
-
                     _.unset(user, 'password');
 
                     return cb(null, user);
                 });
-
 
 
             });

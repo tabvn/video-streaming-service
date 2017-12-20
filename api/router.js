@@ -1,8 +1,48 @@
 const _ = require('lodash');
-
+const {ObjectID} = require('mongodb');
 
 exports.routers = (app) => {
 
+
+    /**
+     * Middleware for checking user with token access id
+     *
+     */
+
+    const allowAuthenticatedUser = (req, res, next) => {
+
+
+        let tokenId = req.get('authorization');
+        if (!tokenId) {
+            tokenId = req.query.auth;
+        }
+
+
+        if (!tokenId) {
+
+            return errorHandle(res, "Access denied", 401);
+        } else {
+
+            // let veriy this token
+
+            app.models.token.load(tokenId, (err, result) => {
+
+                if (err) {
+
+                    return errorHandle(res, "Access denied", 401);
+                }
+
+                req.ctx = {
+                    token: result
+                };
+
+                return next();
+
+            });
+
+        }
+
+    };
 
     /**
      * Error Handle in response
@@ -169,14 +209,91 @@ exports.routers = (app) => {
         }
 
 
-       app.models.token.verify(tokenId, (err, result) => {
+        app.models.token.verify(tokenId, (err, result) => {
 
-            if(err){
+            if (err) {
                 return errorHandle(res, "Access denied", 401);
             }
 
             return responseHandle(res, result);
         });
+    });
+
+
+    /**
+     * @method GET
+     * @endpoint /api/me/cameras
+     * @description Get owner cameras.
+     *
+     */
+
+    app.get('/api/me/cameras', allowAuthenticatedUser, (req, res, next) => {
+
+
+        let userId = _.get(req, 'ctx.token.userId');
+
+        if(typeof userId === 'string'){
+            userId = new ObjectID(userId);
+        }
+        const query = {
+            userId: userId
+        };
+        const options = {
+            _id: true,
+            name: true,
+            created: true,
+            live: true,
+            lastConnected:true,
+            isConnected: true,
+            created: true
+        }
+
+        app.models.camera.find(query, options, (err, results) => {
+
+            if(err){
+                return errorHandle(res, err, 404);
+            }
+
+            return responseHandle(res, results);
+        })
+
+
+
+    });
+
+
+    /**
+     * @method POST
+     * @endpoint /api/me/cameras
+     * @description add new user camera
+     *
+     */
+
+    app.post('/api/me/cameras', allowAuthenticatedUser, (req, res, next) => {
+
+
+
+        let camera = req.body;
+        if(!camera){
+            return errorHandle(res, "Camera is required", 500);
+        }
+        const userId = _.get(req, 'ctx.token.userId');
+
+        camera = _.setWith(camera, 'userId', userId);
+
+        app.models.camera.create(camera, (err, result) => {
+
+            if(err){
+
+                return errorHandle(res, err);
+            }
+
+            return responseHandle(res, result, 200);
+
+        });
+
+
+
     });
 
 

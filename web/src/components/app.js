@@ -8,7 +8,9 @@ import {Route, Switch} from 'react-router-dom'
 import Register from "./pages/user/register";
 import Login from "./pages/user/login";
 import Store from "../store";
-
+import _ from 'lodash'
+import UserCamera from "./pages/camera/user-camera";
+import AddCamera from "./pages/camera/add-camera";
 
 const AppWrapper = styled.div `
    
@@ -59,9 +61,16 @@ const HeaderUserAvatar = styled.img `
     width: 30px;
     height: 30px;
 `
+
+const UserTitle = styled.div `
+    font-size: 14px;
+    font-weight: 600;
+    line-height: ${headerHeight}px;
+    padding-right: 10px;
+`
 export default class App extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
 
@@ -69,27 +78,38 @@ export default class App extends React.Component {
             store: new Store(this)
         }
     }
+
     render() {
 
-       const {store} = this.state;
+        const {store} = this.state;
+
+        const currentUser = store.getCurrentUser();
+
+
 
 
         return <AppWrapper>
             <Header>
                 <HeaderWrapper>
                     <HeaderTitle>Camera</HeaderTitle>
+                    {currentUser ? <UserTitle>{_.get(currentUser, 'name', '')}</UserTitle> : null}
                     <HeaderUserMenu>
-                        <HeaderUserAvatar alt="" src={userAvatar} />
+
+                        <HeaderUserAvatar alt="" src={userAvatar}/>
                     </HeaderUserMenu>
                 </HeaderWrapper>
             </Header>
             <Main>
                 <Container>
                     <Switch>
-                        <Route exact path={'/login'} render={(routeProps) => <Login {...routeProps} store={store}/>} />
-                        <Route exact path={'/register'} render={(routeProps) => <Register {...routeProps} store={store}/>} />
-                        <Route exact path={'/watch/:id'} render={(routeProps) => <Watch {...routeProps} store={store}/>}/>
-                        <Route exact path={'/'} render={(routeProps) => <Home {...routeProps} store={store}/>} />
+                        <Route exact path={'/dashboard/camera/add'} render={(routeProps) => <AddCamera {...routeProps} store={store}/>}/>
+                        <Route exact path={'/dashboard/camera'} render={(routeProps) => <UserCamera {...routeProps} store={store}/>}/>
+                        <Route exact path={'/login'} render={(routeProps) => <Login {...routeProps} store={store}/>}/>
+                        <Route exact path={'/register'}
+                               render={(routeProps) => <Register {...routeProps} store={store}/>}/>
+                        <Route exact path={'/watch/:id'}
+                               render={(routeProps) => <Watch {...routeProps} store={store}/>}/>
+                        <Route exact path={'/'} render={(routeProps) => <Home {...routeProps} store={store}/>}/>
                     </Switch>
                 </Container>
             </Main>

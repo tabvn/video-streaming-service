@@ -1,5 +1,6 @@
 const User = require('./user');
-const Token = require('./token')
+const Token = require('./token');
+const Camera = require('./camera');
 class Model{
 
 
@@ -10,6 +11,7 @@ class Model{
 
         this.user = new User(app);
         this.token = new Token(app);
+        this.camera = new Camera(app);
 
     }
 }

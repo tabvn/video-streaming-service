@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {api} from './config'
+import _ from 'lodash'
 
 
 export default class Service{
@@ -12,10 +13,30 @@ export default class Service{
 
     get(apiPath, options = {}){
 
+        const currentUserTokenId = this.store.getCurrentUserTokenId();
 
-        return axios.get(`${api}${apiPath}`)
+        if(currentUserTokenId){
+            // add a token id to headers.
+
+            options = _.setWith(options, 'headers.authorization', currentUserTokenId);
+
+        }
+
+        return axios.get(`${api}${apiPath}`, options)
     }
-    post(apiPath, data, options = null){
+    post(apiPath, data, options = {}){
+
+        const currentUserTokenId = this.store.getCurrentUserTokenId();
+
+        if(currentUserTokenId){
+            // add a token id to headers.
+
+            options = _.setWith(options, 'headers.authorization', currentUserTokenId);
+
+        }
+
+
+
         return axios.post(`${api}${apiPath}`, data, options);
     }
 }

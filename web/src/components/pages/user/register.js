@@ -10,8 +10,12 @@ import {
     FormAction,
     FormInput,
     FormLabel,
-    FormSubmit
+    FormSubmit,
+    FormButton,
+    FormActionLeft
 } from '../../themes/form'
+
+import {history} from "../../../history";
 
 const RegisterWrapper = styled.div `
  
@@ -39,6 +43,18 @@ export default class Register extends Component {
 
         this._onTextFieldChange = this._onTextFieldChange.bind(this);
         this._onSubmit = this._onSubmit.bind(this);
+
+    }
+    componentWillMount() {
+
+        const {store} = this.props;
+
+        const currentUser = store.getCurrentUser();
+        if(currentUser){
+            // user is logged in we need redirect him to other page.
+
+            history.push('/');
+        }
 
     }
 
@@ -87,7 +103,6 @@ export default class Register extends Component {
 
         const {user, message} = this.state;
 
-        console.log("Register Component with Props", this.props);
 
         return (
             <RegisterWrapper>
@@ -117,7 +132,15 @@ export default class Register extends Component {
                                    value={_.get(user, 'password', '')} type={'password'}/>
                     </FormItem>
                     <FormAction>
-                        <FormSubmit type={'submit'}>Create new account</FormSubmit>
+                        <FormActionLeft>
+                            <FormSubmit type={'submit'}>Create new account</FormSubmit>
+                        </FormActionLeft>
+
+                        <FormButton onClick={(e) => {
+
+                            history.push('/login')
+
+                        }} type={'button'}>Login</FormButton>
                     </FormAction>
 
                 </Form>

@@ -20,8 +20,13 @@ export const FormItem = styled.div `
     display: flex;
     flex-direction: column;
 `
-export const FormLabel = styled.label `
+export const FormCheckboxItem = styled.div `
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+`
 
+export const FormLabel = styled.label `
        font-weight: 600;
 `
 export const FormInput = styled.input `
@@ -30,9 +35,10 @@ export const FormInput = styled.input `
     
 `
 
+
 export const FormAction = styled.div `
 
-    
+       display: flex;
 `
 
 export const FormSubmit = styled.button `
@@ -41,5 +47,17 @@ export const FormSubmit = styled.button `
         padding: 5px 15px;
         background: #FFF;
         font-weight: 600;
+
+`
+
+export const FormButton = styled.button `
+
+        border: 1px transparent;
+        padding: 5px 15px;
+        background: #FFF;
+        font-weight: 600;
+`
+export const FormActionLeft = styled.div `
+    flex-grow: 1;
 
 `

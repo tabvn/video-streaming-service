@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
+import {history} from "../../../history";
 import {
     FormSuccessMessage,
     FormErrorMessage,
@@ -16,6 +17,9 @@ import _ from 'lodash'
 const LoginWrapper = styled.div `
 
 `
+
+
+
 export default class Login extends Component {
 
 
@@ -23,7 +27,7 @@ export default class Login extends Component {
         super(props);
 
         this.state = {
-            message:{
+            message: {
                 type: 'success',
                 msg: null
             },
@@ -35,6 +39,19 @@ export default class Login extends Component {
 
         this._onSubmit = this._onSubmit.bind(this);
         this._onTextFieldChange = this._onTextFieldChange.bind(this);
+    }
+
+    componentWillMount() {
+
+        const {store} = this.props;
+
+        const currentUser = store.getCurrentUser();
+        if(currentUser){
+            // user is logged in we need redirect him to other page.
+
+            history.push('/');
+        }
+
     }
 
     _onTextFieldChange(event) {
@@ -65,12 +82,12 @@ export default class Login extends Component {
             if (err) {
 
                 this.setState({
-                    message: {type:'error', msg: _.get(err, 'response.data.error.message', "Login Error")}
+                    message: {type: 'error', msg: _.get(err, 'response.data.error.message', "Login Error")}
                 })
             } else {
 
                 this.setState({
-                    message: {type:'success', msg: 'Login successful.'}
+                    message: {type: 'success', msg: 'Login successful.'}
                 })
             }
 
