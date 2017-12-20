@@ -23,3 +23,5 @@ find setup solution for your OS: https://opencv.org/releases.html
 pip install opencv-python
 ```
 
+## Face Recognition Python Library
+https://github.com/ageitgey/face_recognition
