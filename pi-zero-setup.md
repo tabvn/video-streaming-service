@@ -89,3 +89,9 @@ Update software on PI
 sudo apt-get update -y
 sudo apt-get upgrade -y
 ```
+
+Config Your pi
+
+```
+sudo raspi-config
+```
