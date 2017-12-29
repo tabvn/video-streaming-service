@@ -22,5 +22,5 @@ web/package-lock.json
 raspberrypi/.idea
 raspberrypi/venv
 
-ios/Stream/Pods
-ios/Stream/Podfile.lock
+ios/Pods
+ios/Podfile.lock
