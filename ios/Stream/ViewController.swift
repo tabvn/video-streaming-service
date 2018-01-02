@@ -8,67 +8,104 @@
 
 import UIKit
 
-class ViewController: UIViewController, VLCMediaPlayerDelegate {
+class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
-    let player: VLCMediaPlayer = {
+
+    let cellId: String = "cellId"
+    
+    let layout: UICollectionViewFlowLayout = {
         
-        let p = VLCMediaPlayer()
+        let collection_layout = UICollectionViewFlowLayout()
         
-        return p
+        collection_layout.itemSize = CGSize(width: 100, height: 100)
+        collection_layout.minimumInteritemSpacing = 1.0
+        collection_layout.minimumLineSpacing = 1.0
+        collection_layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collection_layout.scrollDirection = .vertical
+        
+        return collection_layout
         
     }()
-    
-    let playerView: UIView = {
+    lazy var collectionView: UICollectionView = {
         
-        let view = UIView()
+        let collection_view = UICollectionView(frame: self.view.frame, collectionViewLayout: self.layout)
         
-        view.translatesAutoresizingMaskIntoConstraints = false
-       
-        return view
+        collection_view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collection_view
     }()
     
     
+    func setupCollectionView(){
+        
+        
+        self.view.addSubview(collectionView)
+        
+        
+        // setup auto layout for collection view
+        let parentView: UIView = self.view
+        collectionView.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 0).isActive = true
+        collectionView.leftAnchor.constraint(equalTo: parentView.leftAnchor, constant: 0).isActive = true
+        collectionView.rightAnchor.constraint(equalTo: parentView.rightAnchor, constant: 0).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: 0).isActive = true
+        
+        self.collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        // give an example backgrond color for collection view
+        
+        collectionView.backgroundColor = .white
+        
+        // register a sub class for collection cell
+        
+        self.collectionView.register(CameraCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        
+        
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        
+        return 1
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return 12
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell: CameraCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CameraCollectionViewCell
+        
+        cell.camera = Camera(name: "Camera title", isConnected: true, isLive: true, url: "rtmp://192.168.1.10/play/tabvn")
+        
+        cell.setupPlayer()
+        
+        cell.backgroundColor = .black
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let padding: CGFloat = 2.0
+        let width = collectionView.frame.width - padding
+        
+        if UIApplication.shared.statusBarOrientation.isLandscape{
+            
+            return CGSize(width: width/3, height: width/3)
+        }
+        return CGSize(width: width/2, height: width/2)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCollectionView()
         
-        setupPlayer()
     }
     
-    func setupPlayer(){
-        
-        self.view.addSubview(playerView)
-        
-        playerView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        playerView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
-        playerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        playerView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
-        
-        playerView.backgroundColor = UIColor.black
-        
-        
-        let streamUrl = URL(string: "rtmp://192.168.1.10/play/tabvn")
-        
-        let media = VLCMedia(url: streamUrl)
-        
-        player.media = media
-        player.delegate = self
-        player.drawable = playerView
-        
-        // Play video
-        
-        player.play()
-        
-        
-        
-        
-    }
+   
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
 
 }

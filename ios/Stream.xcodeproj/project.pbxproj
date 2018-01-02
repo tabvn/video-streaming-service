@@ -15,6 +15,8 @@
 		540AB3291FF5FE260011E9E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 540AB3271FF5FE260011E9E8 /* LaunchScreen.storyboard */; };
 		540AB3341FF5FE260011E9E8 /* StreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540AB3331FF5FE260011E9E8 /* StreamTests.swift */; };
 		540AB33F1FF5FE260011E9E8 /* StreamUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540AB33E1FF5FE260011E9E8 /* StreamUITests.swift */; };
+		542124CA1FFBD35300D84976 /* CameraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542124C91FFBD35300D84976 /* CameraCollectionViewCell.swift */; };
+		542124CD1FFBD3FC00D84976 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542124CC1FFBD3FC00D84976 /* Camera.swift */; };
 		54DC174E1FF5FF210090E132 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 54DC174D1FF5FF210090E132 /* libstdc++.6.tbd */; };
 		54DC17511FF600A20090E132 /* header.m in Sources */ = {isa = PBXBuildFile; fileRef = 54DC17501FF600A20090E132 /* header.m */; };
 		6AB7AB00FEC2E96D2926EDE3 /* Pods_StreamTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4F308609372D03D8C92A750 /* Pods_StreamTests.framework */; };
@@ -56,6 +58,8 @@
 		540AB33A1FF5FE260011E9E8 /* StreamUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StreamUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		540AB33E1FF5FE260011E9E8 /* StreamUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamUITests.swift; sourceTree = "<group>"; };
 		540AB3401FF5FE260011E9E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		542124C91FFBD35300D84976 /* CameraCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCollectionViewCell.swift; sourceTree = "<group>"; };
+		542124CC1FFBD3FC00D84976 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		54DC174D1FF5FF210090E132 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
 		54DC174F1FF600A10090E132 /* Stream-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Stream-Bridging-Header.h"; sourceTree = "<group>"; };
 		54DC17501FF600A20090E132 /* header.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = header.m; sourceTree = "<group>"; };
@@ -133,6 +137,7 @@
 		540AB31D1FF5FE260011E9E8 /* Stream */ = {
 			isa = PBXGroup;
 			children = (
+				542124CB1FFBD3E800D84976 /* models */,
 				540AB31E1FF5FE260011E9E8 /* AppDelegate.swift */,
 				54DC17501FF600A20090E132 /* header.m */,
 				540AB3201FF5FE260011E9E8 /* ViewController.swift */,
@@ -141,6 +146,7 @@
 				540AB3271FF5FE260011E9E8 /* LaunchScreen.storyboard */,
 				540AB32A1FF5FE260011E9E8 /* Info.plist */,
 				54DC174F1FF600A10090E132 /* Stream-Bridging-Header.h */,
+				542124C91FFBD35300D84976 /* CameraCollectionViewCell.swift */,
 			);
 			path = Stream;
 			sourceTree = "<group>";
@@ -161,6 +167,14 @@
 				540AB3401FF5FE260011E9E8 /* Info.plist */,
 			);
 			path = StreamUITests;
+			sourceTree = "<group>";
+		};
+		542124CB1FFBD3E800D84976 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				542124CC1FFBD3FC00D84976 /* Camera.swift */,
+			);
+			path = models;
 			sourceTree = "<group>";
 		};
 		96019B8C9256A45350142D19 /* Frameworks */ = {
@@ -466,6 +480,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				54DC17511FF600A20090E132 /* header.m in Sources */,
+				542124CD1FFBD3FC00D84976 /* Camera.swift in Sources */,
+				542124CA1FFBD35300D84976 /* CameraCollectionViewCell.swift in Sources */,
 				540AB3211FF5FE260011E9E8 /* ViewController.swift in Sources */,
 				540AB31F1FF5FE260011E9E8 /* AppDelegate.swift in Sources */,
 			);
