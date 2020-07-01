@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.19.2",
     "history": "^4.7.2",
     "hls.js": "^0.8.8",
     "immutable": "^3.8.2",
