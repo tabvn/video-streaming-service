@@ -11,7 +11,7 @@ or use Home brew https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-
 We use home brew to install package if you dont have Home brew just see documentation to install home brew on your MacOs https://brew.sh/ 
 
 ```
-brew tap homebrew/nginx
+brew tap denji/homebrew-nginx
 ```
 
 ```
